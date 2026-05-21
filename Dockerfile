@@ -2,19 +2,21 @@ FROM n8nio/n8n:latest
 
 USER root
 
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y \
     chromium \
-    nss \
-    freetype \
-    harfbuzz \
-    ca-certificates \
-    ttf-freefont \
-    nodejs \
-    npm
-
-ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-ENV PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium-browser
+    fonts-liberation \
+    libatk-bridge2.0-0 \
+    libgtk-3-0 \
+    libnss3 \
+    libxss1 \
+    libasound2 \
+    libgbm1 \
+    wget \
+    ca-certificates
 
 RUN npm install playwright
+
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+ENV PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium
 
 USER node
